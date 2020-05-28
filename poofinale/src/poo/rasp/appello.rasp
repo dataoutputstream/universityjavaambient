@@ -1,0 +1,108 @@
+;int []v=new int[10];
+;int []w=new int[10];
+;int []z=new int[10];
+;//lettura di v
+;for( int i=0; i<v.length; ++i ) leggi v[i];
+;//lettura di w
+;for( int i=0; i<w.length; ++i ) leggi w[i];
+;//calcolo
+;int s=0;
+;for( int i=0; i<z.length; ++i ){
+;	s=s+v[i];
+;	if( w[i]==s ) z[i]=true;
+;	else z[i]=false;
+;}
+;//scrittura di z
+;for( int i=0; i<z.length; ++i ) scrivi z[i];
+;
+;Traduzione sistematica in assembler
+;
+V:	RES		10
+W:	RES		10
+Z:	RES		10
+	LOAD#		10
+	STORE		LENGTH
+	LOAD#		0
+	STORE		I
+FORV:
+	LOAD		I
+	SUB		LENGTH
+	JZ		FINEFORV
+	LOAD#		V
+	ADD		I
+	STORE		VI; v[i]
+	READ@		VI; leggi v[i]
+	LOAD		I
+	ADD#		1
+	STORE		I
+	JUMP		FORV
+FINEFORV:
+	LOAD#		0
+	STORE		I
+FORW:
+	LOAD		I
+	SUB		LENGTH
+	JZ		FINEFORW
+	LOAD#		W
+	ADD		I
+	STORE		WI; w[i]
+	READ@		WI; leggi w[i]
+	LOAD		I
+	ADD#		1
+	STORE		I
+	JUMP		FORW
+FINEFORW:
+	LOAD#		0
+	STORE		I
+	STORE		S
+FOR1:
+	LOAD		I
+	SUB		LENGTH
+	JZ		FINEFOR1
+	LOAD#		V
+	ADD		I
+	STORE		VI
+	LOAD		S
+	ADD@		VI
+	STORE		S
+	LOAD#		W
+	ADD		I
+	STORE		WI
+	LOAD#		Z
+	ADD		I
+	STORE		ZI
+	LOAD		S
+	SUB@		WI
+	JNZ		ELSE
+	LOAD#		1
+	STORE@		ZI
+	JUMP		FINEIF
+ELSE:
+	LOAD#		0
+	STORE@		ZI
+FINEIF:
+	LOAD		I
+	ADD#		1
+	STORE		I
+	JUMP		FOR1
+FINEFOR1:
+	LOAD#		0
+	STORE		I
+FORZ:
+	LOAD		I
+	SUB		LENGTH
+	JZ		FINEFORZ
+	LOAD#		Z
+	ADD		I
+	STORE		ZI; z[i]
+	WRITE@		ZI; scrivi z[i]
+	LOAD		I
+	ADD#		1
+	STORE		I
+	JUMP		FORZ
+FINEFORZ:
+	HALT
+
+
+	
+	

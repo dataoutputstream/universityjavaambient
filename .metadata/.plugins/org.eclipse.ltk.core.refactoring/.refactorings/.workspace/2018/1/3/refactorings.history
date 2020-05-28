@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring accessors="true" comment="Delete 4 elements from workspace&#x0D;&#x0A;- Original elements:&#x0D;&#x0A;     poo/src/poo.linkedlist&#x0D;&#x0A;     poo/src/poo.valutatoreespressione&#x0D;&#x0A;     poofinale/src/poo.linkedlist&#x0D;&#x0A;     poofinale/src/poo.valutatoreespressione" description="Delete elements" element1="=poo/src&lt;poo.valutatoreespressione" element2="=poo/src&lt;poo" element3="=poofinale/src&lt;poo.valutatoreespressione" element4="=poofinale/src&lt;poo.linkedlist" element5="=poo/src&lt;poo.linkedlist" element6="=poo/src&lt;poo" elements="6" flags="589830" id="org.eclipse.jdt.ui.delete" resources="0" stamp="1516180884017" subPackages="false" version="1.0"/>
+</session>

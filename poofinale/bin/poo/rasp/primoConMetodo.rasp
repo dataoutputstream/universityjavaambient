@@ -1,0 +1,110 @@
+;legge un intero, e scrive -1 se non positivo, 1 se è primo, 0 se non primo
+;usa un metodo di appoggio
+STACK:	RES	100
+	LOAD#	0
+	STORE	SS ; Stack Size - punta al primo libero dello stack
+	READ	NUM
+	LOAD	NUM
+	JLEZ	ERROR
+;prepara area dati di ePrimo
+	LOAD#	STACK
+	ADD	SS
+	STORE	SP ; Stack Pointer
+	LOAD#	PUNTORITORNO
+	STORE@	SP ; push indirizzo di ritorno
+	LOAD	SS
+	ADD#	1
+	STORE 	SS
+	LOAD#	STACK
+	ADD	SS
+	STORE	SP
+	LOAD	NUM
+	STORE@	SP ; push parametro
+	LOAD	SS
+	ADD#	1
+	STORE	SS ; SS punta al primo libero dello stack
+	JUMP	EPRIMO	
+PUNTORITORNO:	
+	LOAD#	STACK
+	ADD	SS
+	STORE	SP
+	LOAD@	SP
+	STORE	FLAG ; pop risultato
+	LOAD	SS
+	SUB#	1
+	STORE	SS   ; svuota stack
+	WRITE	FLAG
+	JUMP	FINE
+ERROR:
+	WRITE#	-1
+FINE:
+	HALT
+;
+;segue il "metodo" ePrimo	
+;
+EPRIMO:		
+	LOAD	SS
+	SUB#	1
+	STORE	SS
+	LOAD#	STACK
+	ADD	SS
+	STORE	SP ; SP punta al parametro
+	LOAD@	SP
+	STORE	X  ; pop parametro e lo salva in X
+	LOAD	SS
+	SUB#	1
+	STORE	SS ; "elimina" parametro
+	LOAD	X
+	SUB#	2
+	JNZ	PROSEGUI
+	LOAD#	1
+	STORE	FLAG
+	JUMP	TERMINA
+PROSEGUI:
+	LOAD	X
+	DIV#	2
+	MUL#	2
+	SUB	X
+	JNZ	AVANTI
+	LOAD#	0
+	STORE	FLAG
+	JUMP	TERMINA
+AVANTI:
+;ciclo verifica primalità di un numero dispari
+	LOAD#	3
+	STORE	POTDIV
+	LOAD	X
+	DIV#	2
+	STORE	LIMITE
+	LOAD#	1
+	STORE	FLAG ; ottimismo
+CICLO:
+	LOAD	POTDIV
+	SUB	LIMITE
+	JGZ	TERMINA
+	LOAD	FLAG
+	JZ	TERMINA
+	LOAD	X
+	DIV	POTDIV
+	MUL	POTDIV
+	SUB	X
+	JNZ	CONTINUA
+	LOAD#	0
+	STORE	FLAG
+CONTINUA:
+	LOAD	POTDIV
+	ADD#	2
+	STORE	POTDIV
+	JUMP	CICLO
+TERMINA:
+	LOAD#	STACK
+	ADD	SS
+	STORE	SP
+	LOAD@	SP
+	STORE	INDRIT ; pop indirizzo di ritorno
+	LOAD	FLAG   ; rimpiazza indirizzo di ritorno col risultato
+	STORE@	SP
+	JUMP@	INDRIT
+
+	
+	
